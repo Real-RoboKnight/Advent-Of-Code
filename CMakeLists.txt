@@ -7,7 +7,7 @@ include(CMakeDependentOption)
 cmake_dependent_option(RUN_TEST "Run tests on build. If set to OFF, tests can be run from ${CMAKE_BINARY_DIR}/Tests/tests" ON BUILD_TEST OFF)
 
 add_custom_target(build_and_test_prog ALL)
-add_subdirectory(Day1)
+add_subdirectory(2025/Day1)
 
 if(RUN_TEST AND BUILD_TEST)
   get_property(test_targets GLOBAL PROPERTY REGISTERED_TESTS)

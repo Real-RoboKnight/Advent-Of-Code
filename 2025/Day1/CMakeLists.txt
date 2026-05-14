@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.23)
-set(name "Day_One")
+set(name "2025.1")
 
 add_executable(${name})
 target_sources(${name}

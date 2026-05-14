@@ -7,9 +7,9 @@ If you are also doing the problems, I encourage you to solve them independently 
 If you need to contact me, you can [email me](mailto:code@dylan-shah.com?subject=Advent%20Of%20Code).
 
 # Dependencies
-C++ 20
-Cmake - Build System
-Catch2 - Testing framework
+ - C++ 20
+ - Cmake - Build System
+ - Catch2 - Testing framework
 
 ## License 
 This program is free software: you can redistribute it and/or modify

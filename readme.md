@@ -1,8 +1,15 @@
-# My solutions to the [Advent Of Code](https://adventofcode.com/) problems.
+# My solutions to the Advent Of Code problems.
 
-If you are also doing the problems, I encourage you to solve them independintly to grow your own skills. Please do not use my solutions to cheat yourself of learning.
+[Link to the Advent Of Code](https://adventofcode.com/)
 
-If you need to contact me, you can [email me](mailto:code@dylan-shah.com).
+If you are also doing the problems, I encourage you to solve them independently to grow your own skills. Please do not use my solutions to cheat yourself of learning.
+
+If you need to contact me, you can [email me](mailto:code@dylan-shah.com?subject=Advent%20Of%20Code).
+
+# Dependencies
+C++ 20
+Cmake - Build System
+Catch2 - Testing framework
 
 ## License 
 This program is free software: you can redistribute it and/or modify

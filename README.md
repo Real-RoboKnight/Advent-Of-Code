@@ -9,7 +9,14 @@ If you need to contact me, you can [email me](mailto:code@dylan-shah.com?subject
 # Dependencies
  - C++ 20
  - Cmake - Build System
- - Catch2 - Testing framework
+ - Catch2 - Testing framework (Cmake will auto-install)
+
+## Build Project
+Run: `cmake --preset Development -B build/` once from the project root to initialize the build system. See the Cmake documentation if this does not work.
+
+Run `cmake --build build/` to build the project. The first build will be long, but subsequent builds should be faster.
+
+Final executables will be in `build/<year>/Day<day>/`
 
 ## License 
 This program is free software: you can redistribute it and/or modify

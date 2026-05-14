@@ -64,44 +64,28 @@ TEST_CASE("Ensure that the the lock can roll around max value",
         lock.set_current_value(50);
         std::cout << "After reset: " << lock.get_current_value() << "\n";
         WHEN("Incremented by 60") {
-            std::cout << "Before decrement: " << lock.get_current_value()
-                      << "\n";
             lock += 60;
-            std::cout << "After decrement: " << lock.get_current_value()
-                      << "\n";
             THEN("Lock should be 10") {
                 REQUIRE(lock.get_current_value() == 10);
                 REQUIRE(lock.get_frequency(10) == 1);
             }
         }
         WHEN("Decremented by 60") {
-            std::cout << "Before decrement: " << lock.get_current_value()
-                      << "\n";
             lock -= 60;
-            std::cout << "After decrement: " << lock.get_current_value()
-                      << "\n";
             THEN("Lock should be 90") {
                 REQUIRE(lock.get_current_value() == 90);
                 REQUIRE(lock.get_frequency(90) == 1);
             }
         }
         WHEN("Incremented by 160") {
-            std::cout << "Before decrement: " << lock.get_current_value()
-                      << "\n";
             lock += 160;
-            std::cout << "After decrement: " << lock.get_current_value()
-                      << "\n";
             THEN("Lock should be 10") {
                 REQUIRE(lock.get_current_value() == 10);
                 REQUIRE(lock.get_frequency(10) == 1);
             }
         }
         WHEN("Decremented by 160") {
-            std::cout << "Before decrement: " << lock.get_current_value()
-                      << "\n";
             lock -= 160;
-            std::cout << "After decrement: " << lock.get_current_value()
-                      << "\n";
             THEN("Lock should be 90") {
                 REQUIRE(lock.get_current_value() == 90);
                 REQUIRE(lock.get_frequency(90) == 1);

@@ -14,6 +14,7 @@ if(BUILD_TEST)
   target_sources("${name}_Tests"
     PRIVATE
       lock_test.cpp
+      input_parser_tests.cpp
   )
   target_include_directories(${name}_Tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
   target_compile_features(${name}_Tests PUBLIC cxx_std_20)

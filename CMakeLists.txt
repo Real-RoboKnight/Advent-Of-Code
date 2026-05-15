@@ -25,8 +25,8 @@ if(AUTO_RUN_TEST AND BUILD_TEST)
   foreach(t IN LISTS test_targets)
     add_custom_command(TARGET build_and_test_prog
       POST_BUILD
-      COMMAND echo "--- Running ${t} ---"
-      COMMAND $<TARGET_FILE:${t}> -d yes -v high --colour-mode ansi
+      COMMAND echo "--- Running $<TARGET_FILE:${t}> ---"
+      COMMAND $<TARGET_FILE:${t}> --colour-mode ansi
       VERBATIM
     )
   endforeach()

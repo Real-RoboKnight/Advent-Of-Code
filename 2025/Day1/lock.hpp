@@ -24,10 +24,9 @@
  * \endparblock
  *
  */
-
+#pragma once
 #include <array>
 #include <concepts>
-#include <cstdint>
 #include <format>
 
 /**
@@ -42,7 +41,7 @@
  */
 template<std::size_t          max_elem,
          std::size_t          min_elem = 0,
-         std::signed_integral T        = std::int32_t>
+         std::signed_integral T        = int>
     requires(max_elem > min_elem)
 class histogram_lock {
   public:

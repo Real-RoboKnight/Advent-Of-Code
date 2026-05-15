@@ -27,7 +27,6 @@
 #include "lock.hpp"
 #include <catch2/catch_test_macros.hpp>
 #include <cstdint>
-#include <iostream>
 #include <stdexcept>
 
 TEST_CASE("Ensure that Lock can be created with any integral type",
@@ -62,7 +61,6 @@ TEST_CASE("Ensure that the the lock can roll around max value",
     REQUIRE_THROWS_AS(lock.set_current_value(150), std::range_error);
     GIVEN("Lock at 50") {
         lock.set_current_value(50);
-        std::cout << "After reset: " << lock.get_current_value() << "\n";
         WHEN("Incremented by 60") {
             lock += 60;
             THEN("Lock should be 10") {

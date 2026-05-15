@@ -18,6 +18,9 @@ Run `cmake --build build/` to build the project. The first build will be long, b
 
 Final executables will be in `build/<year>/Day<day>/`
 
+## Documentation
+Install `doxygen` and run it in the main directory to generate HTML docs (`docs/html/index.html`), and a makefile for PDF documentation.
+
 ## License 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

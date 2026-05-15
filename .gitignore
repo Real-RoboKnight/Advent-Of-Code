@@ -71,5 +71,5 @@ Testing/
 #VS Code files
 .vscode/
 
-# Latex source
-latex/
+# docs
+docs/

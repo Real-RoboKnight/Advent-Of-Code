@@ -18,6 +18,7 @@ if(BUILD_TEST) # Fetch cmake from github
 endif()
 
 add_custom_target(build_and_test_prog ALL)
+
 add_subdirectory(2025/Day1)
 
 if(AUTO_RUN_TEST AND BUILD_TEST)

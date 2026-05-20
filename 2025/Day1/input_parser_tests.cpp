@@ -53,3 +53,29 @@ TEST_CASE("Check inputs come out correctly", "[DayOne][Parser]") {
     }
     std::remove(tempFile.c_str());
 }
+
+TEST_CASE("Check more inputs come out correctly", "[DayOne][Parser]") {
+    int correct_vals[] = { -680, -30, 485, -5, 60, -55, -1, -99, 14, -82 };
+
+    std::filesystem::path tempDir  = std::filesystem::temp_directory_path();
+    std::filesystem::path tempFile = tempDir / "AVC.2025.1.Test.tmp";
+
+    std::ofstream file(tempFile);
+    file << "L680\n"
+            "L30\n"
+            "R485\n"
+            "L5\n"
+            "R60\n"
+            "L55\n"
+            "L1\n"
+            "L99\n"
+            "R14\n"
+            "L82\n";
+    file.close();
+
+    auto parser = input_parser<int>(tempFile).begin();
+    for (auto i : correct_vals) {
+        CHECK(*parser++ == i);
+    }
+    std::remove(tempFile.c_str());
+}

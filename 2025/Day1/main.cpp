@@ -26,9 +26,30 @@
  *
  */
 
+#include "input_parser.hpp"
+#include "lock.hpp"
+#include <cstdlib>
+#include <filesystem>
 #include <iostream>
 
 int main(int argc, char const* argv[]) {
-    std::cout << "test";
+    // CMD line parcing
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " [inputs]\n";
+
+        std::exit(1);
+    }
+    if (not std::filesystem::exists(argv[1])) {
+        std::cerr << "Inputs must be a valid file path";
+
+        std::exit(1);
+    }
+    histogram_lock<99> lock{ 50 };
+    input_parser<int>  inputs{ argv[1] };
+    for (auto input : inputs)
+        lock += input;
+
+    std::cout << "Number of times lock was at 0: " << lock.get_frequency(0);
+
     return 0;
 }

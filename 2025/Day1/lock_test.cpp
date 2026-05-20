@@ -91,3 +91,44 @@ TEST_CASE("Ensure that the the lock can roll around max value",
         }
     }
 }
+
+TEST_CASE("Large Wrapping", "[DayOne][Lock][Overflow]") {
+    histogram_lock<99> lock{ 50 };
+    lock += 100;
+    CHECK(lock.get_current_value() == 50);
+    lock -= 100;
+    CHECK(lock.get_current_value() == 50);
+    lock += 200;
+    CHECK(lock.get_current_value() == 50);
+    lock -= 200;
+    CHECK(lock.get_current_value() == 50);
+    lock += 168;
+    CHECK(lock.get_current_value() == 18);
+    lock -= 168;
+    CHECK(lock.get_current_value() == 50);
+}
+
+TEST_CASE("Given in problem set", "[DayOne][Lock][Given]") {
+    histogram_lock<99> lock{ 50 };
+    lock += -68;
+    CHECK(lock.get_current_value() == 82);
+    lock += -30;
+    CHECK(lock.get_current_value() == 52);
+    lock += 48;
+    CHECK(lock.get_current_value() == 0);
+    lock += -5;
+    CHECK(lock.get_current_value() == 95);
+    lock += 60;
+    CHECK(lock.get_current_value() == 55);
+    lock += -55;
+    CHECK(lock.get_current_value() == 0);
+    lock += -1;
+    CHECK(lock.get_current_value() == 99);
+    lock += -99;
+    CHECK(lock.get_current_value() == 0);
+    lock += 14;
+    CHECK(lock.get_current_value() == 14);
+    lock += -82;
+    CHECK(lock.get_current_value() == 32);
+    REQUIRE(lock.get_frequency(0) == 3);
+}

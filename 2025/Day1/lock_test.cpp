@@ -24,6 +24,7 @@
  * \endparblock
  *
  */
+
 #include "lock.hpp"
 #include <catch2/catch_test_macros.hpp>
 #include <cstdint>
@@ -31,104 +32,104 @@
 
 TEST_CASE("Ensure that Lock can be created with any integral type",
           "[DayOne][Lock][Template]") {
-    histogram_lock<10, 0, int>{ 0 };
-    histogram_lock<100, 0, char>{ 0 };
-    histogram_lock<10, 0, long long>{ 0 };
-    // histogram_lock<10, 0, std::uint8_t>{ 0 }; //Not signed
-    histogram_lock<10, 0, std::int_least16_t>{ 0 };
+  histogram_lock<10, 0, int>{0};
+  histogram_lock<100, 0, char>{0};
+  histogram_lock<10, 0, long long>{0};
+  // histogram_lock<10, 0, std::uint8_t>{ 0 }; //Not signed
+  histogram_lock<10, 0, std::int_least16_t>{0};
 }
 
 TEST_CASE("Ensure that the lock can be rotated, and the count is correct",
           "[DayOne][Lock][Use]") {
-    histogram_lock<100> lock{ 50 };
-    REQUIRE(lock.get_current_value() == 50);
-    REQUIRE(lock.get_frequency(0) == 0);
-    REQUIRE(lock.get_frequency(50) == 1);
-    lock += 5;
-    lock -= 10;
-    lock += 5;
-    REQUIRE(lock.get_current_value() == 50);
-    REQUIRE(lock.get_frequency(50) == 2);
-    REQUIRE(lock.get_frequency(55) == 1);
-    REQUIRE(lock.get_frequency(45) == 1);
+  histogram_lock<100> lock{50};
+  REQUIRE(lock.get_current_value() == 50);
+  REQUIRE(lock.get_frequency(0) == 0);
+  REQUIRE(lock.get_frequency(50) == 1);
+  lock += 5;
+  lock -= 10;
+  lock += 5;
+  REQUIRE(lock.get_current_value() == 50);
+  REQUIRE(lock.get_frequency(50) == 2);
+  REQUIRE(lock.get_frequency(55) == 1);
+  REQUIRE(lock.get_frequency(45) == 1);
 }
 
 TEST_CASE("Ensure that the the lock can roll around max value",
           "[DayOne][Lock][Overflow]") {
-    histogram_lock<99> lock{ 50 };
-    REQUIRE_NOTHROW(lock += 120);
-    REQUIRE_NOTHROW(lock -= 120);
-    REQUIRE_THROWS_AS(lock.set_current_value(150), std::range_error);
-    GIVEN("Lock at 50") {
-        lock.set_current_value(50);
-        WHEN("Incremented by 60") {
-            lock += 60;
-            THEN("Lock should be 10") {
-                REQUIRE(lock.get_current_value() == 10);
-                REQUIRE(lock.get_frequency(10) == 1);
-            }
-        }
-        WHEN("Decremented by 60") {
-            lock -= 60;
-            THEN("Lock should be 90") {
-                REQUIRE(lock.get_current_value() == 90);
-                REQUIRE(lock.get_frequency(90) == 1);
-            }
-        }
-        WHEN("Incremented by 160") {
-            lock += 160;
-            THEN("Lock should be 10") {
-                REQUIRE(lock.get_current_value() == 10);
-                REQUIRE(lock.get_frequency(10) == 1);
-            }
-        }
-        WHEN("Decremented by 160") {
-            lock -= 160;
-            THEN("Lock should be 90") {
-                REQUIRE(lock.get_current_value() == 90);
-                REQUIRE(lock.get_frequency(90) == 1);
-            }
-        }
+  histogram_lock<99> lock{50};
+  REQUIRE_NOTHROW(lock += 120);
+  REQUIRE_NOTHROW(lock -= 120);
+  REQUIRE_THROWS_AS(lock.set_current_value(150), std::range_error);
+  GIVEN("Lock at 50") {
+    lock.set_current_value(50);
+    WHEN("Incremented by 60") {
+      lock += 60;
+      THEN("Lock should be 10") {
+        REQUIRE(lock.get_current_value() == 10);
+        REQUIRE(lock.get_frequency(10) == 1);
+      }
     }
+    WHEN("Decremented by 60") {
+      lock -= 60;
+      THEN("Lock should be 90") {
+        REQUIRE(lock.get_current_value() == 90);
+        REQUIRE(lock.get_frequency(90) == 1);
+      }
+    }
+    WHEN("Incremented by 160") {
+      lock += 160;
+      THEN("Lock should be 10") {
+        REQUIRE(lock.get_current_value() == 10);
+        REQUIRE(lock.get_frequency(10) == 1);
+      }
+    }
+    WHEN("Decremented by 160") {
+      lock -= 160;
+      THEN("Lock should be 90") {
+        REQUIRE(lock.get_current_value() == 90);
+        REQUIRE(lock.get_frequency(90) == 1);
+      }
+    }
+  }
 }
 
 TEST_CASE("Large Wrapping", "[DayOne][Lock][Overflow]") {
-    histogram_lock<99> lock{ 50 };
-    lock += 100;
-    CHECK(lock.get_current_value() == 50);
-    lock -= 100;
-    CHECK(lock.get_current_value() == 50);
-    lock += 200;
-    CHECK(lock.get_current_value() == 50);
-    lock -= 200;
-    CHECK(lock.get_current_value() == 50);
-    lock += 168;
-    CHECK(lock.get_current_value() == 18);
-    lock -= 168;
-    CHECK(lock.get_current_value() == 50);
+  histogram_lock<99> lock{50};
+  lock += 100;
+  CHECK(lock.get_current_value() == 50);
+  lock -= 100;
+  CHECK(lock.get_current_value() == 50);
+  lock += 200;
+  CHECK(lock.get_current_value() == 50);
+  lock -= 200;
+  CHECK(lock.get_current_value() == 50);
+  lock += 168;
+  CHECK(lock.get_current_value() == 18);
+  lock -= 168;
+  CHECK(lock.get_current_value() == 50);
 }
 
 TEST_CASE("Given in problem set", "[DayOne][Lock][Given]") {
-    histogram_lock<99> lock{ 50 };
-    lock += -68;
-    CHECK(lock.get_current_value() == 82);
-    lock += -30;
-    CHECK(lock.get_current_value() == 52);
-    lock += 48;
-    CHECK(lock.get_current_value() == 0);
-    lock += -5;
-    CHECK(lock.get_current_value() == 95);
-    lock += 60;
-    CHECK(lock.get_current_value() == 55);
-    lock += -55;
-    CHECK(lock.get_current_value() == 0);
-    lock += -1;
-    CHECK(lock.get_current_value() == 99);
-    lock += -99;
-    CHECK(lock.get_current_value() == 0);
-    lock += 14;
-    CHECK(lock.get_current_value() == 14);
-    lock += -82;
-    CHECK(lock.get_current_value() == 32);
-    REQUIRE(lock.get_frequency(0) == 3);
+  histogram_lock<99> lock{50};
+  lock += -68;
+  CHECK(lock.get_current_value() == 82);
+  lock += -30;
+  CHECK(lock.get_current_value() == 52);
+  lock += 48;
+  CHECK(lock.get_current_value() == 0);
+  lock += -5;
+  CHECK(lock.get_current_value() == 95);
+  lock += 60;
+  CHECK(lock.get_current_value() == 55);
+  lock += -55;
+  CHECK(lock.get_current_value() == 0);
+  lock += -1;
+  CHECK(lock.get_current_value() == 99);
+  lock += -99;
+  CHECK(lock.get_current_value() == 0);
+  lock += 14;
+  CHECK(lock.get_current_value() == 14);
+  lock += -82;
+  CHECK(lock.get_current_value() == 32);
+  REQUIRE(lock.get_frequency(0) == 3);
 }
